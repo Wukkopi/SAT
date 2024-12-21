@@ -7,7 +7,7 @@ public class SAT : MonoBehaviour
         distance = float.MaxValue;
         if (a is CircleShape shape1 && b is CircleShape shape2)
         {
-            var axis = shape1.position - shape2.position;
+            var axis = shape1.transform.position - shape2.transform.position;
             var p1 = a.GetProjection(axis);
             var p2 = b.GetProjection(axis);
             var overlaps = p1.Overlaps(p2, out distance);
