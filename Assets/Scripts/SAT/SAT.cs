@@ -1,64 +1,35 @@
+
+using System.Collections.Generic;
 using UnityEngine;
+
 public class SAT : MonoBehaviour
 {
-    public static bool Overlap(IShape a, IShape b, out float distance, out Vector2 direction)
+    public List<Shape>  objects;
+
+    // Update is called once per frame
+    void Update()
+    {
+        for (var i = 0; i < objects.Count; i++)
+        {
+            for (var j = i + 1; j < objects.Count; j++)
+            {
+                if (Overlap(objects[i], objects[j], out var distance, out var direction))
+                {
+                    var center = objects[i].GetCenter();
+                    Debug.DrawLine(center, center + direction * distance, Color.red);
+                }
+            }
+        }
+    }
+    
+    private static bool Overlap(IShape a, IShape b, out float distance, out Vector2 direction)
     {
         direction = Vector2.zero;
         distance = float.MaxValue;
-        if (a is CircleShape shape1 && b is CircleShape shape2)
-        {
-            var axis = shape1.transform.position - shape2.transform.position;
-            var p1 = a.GetProjection(axis);
-            var p2 = b.GetProjection(axis);
-            var overlaps = p1.Overlaps(p2, out distance);
-            if (overlaps)
-            {
-                direction = axis;
-            }
-            return overlaps;
-        }
 
-        if (a is VertexShape shape)
-        {
-            var normals = shape.GetNormals();
-            if (!GetOverlap(a, b, normals, ref distance, ref direction))
-            {
-                return false;
-            }
-        }
-
-        if (b is VertexShape shape3)
-        {
-            var normals = shape3.GetNormals();
-            if (!GetOverlap(a, b, normals, ref distance, ref direction))
-            {
-                return false;
-            }
-        }
-        return true;
+        var overlapA = a.ComputeOverlap(b, ref distance, ref direction);
+        var overlapB = b.ComputeOverlap(a, ref distance, ref direction);
+        return overlapA && overlapB;
     }
 
-    private static bool GetOverlap(IShape a, IShape b, Vector2[] normals, ref float distance, ref Vector2 direction)
-    {
-        foreach (var n in normals)
-        {
-            var p1 = a.GetProjection(n);
-            var p2 = b.GetProjection(n);
-            if (p1.Overlaps(p2, out var d))
-            {
-                if (d < distance)
-                {
-                    distance = d;
-                    direction = n;
-                }
-            }
-            else
-            {
-                distance = 0f;
-                direction = Vector2.zero;
-                return false;
-            }
-        }
-        return true;
-    }
 }
