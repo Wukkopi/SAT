@@ -29,29 +29,39 @@ public class CircleShape : Shape
 
         if (other is VertexShape vShape)
         {
-            foreach (var v in vShape.Vertices)
+            var axis = GetAxisForClosestVertex(vShape.Vertices, vShape.Position).normalized;
+
+            var p1 = GetProjection(axis);
+            var p2 = other.GetProjection(axis);
+
+            if (p1.Overlaps(p2, out var d))
             {
-                var axis = ((v + vShape.Position) - Position).normalized;
-                var p1 = GetProjection(axis);
-                var p2 = other.GetProjection(axis);
-                if (p1.Overlaps(p2, out var d))
+                if (d < distance)
                 {
-                    if (d < distance)
-                    {
-                        distance = d;
-                        direction = axis;
-                    }
+                    distance = d;
+                    direction = -axis;
                 }
-                else
-                {
-                    distance = 0f;
-                    direction = Vector2.zero;
-                    return false;
-                }
+                return true;
             }
-            return true;
+            return false;
         }
         throw new NotImplementedException("Unrecognized shape received");
+    }
+    private Vector2 GetAxisForClosestVertex(Vector2[] vertices, Vector2 verticeOffset)
+    {
+        var result = Vector2.zero;
+        var closest = float.MaxValue;
+        foreach (var v in vertices)
+        {
+            var axis = v + verticeOffset - Position;
+            var distance = axis.sqrMagnitude;
+            if (distance < closest)
+            {
+                closest = distance;
+                result = axis;
+            }
+        }
+        return result;
     }
 
     public void Update()

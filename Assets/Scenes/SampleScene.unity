@@ -166,6 +166,7 @@ MonoBehaviour:
   - {fileID: 1528487235}
   - {fileID: 484864577}
   - {fileID: 1642516346}
+  ResolveCollisions: 1
 --- !u!4 &614247301
 Transform:
   m_ObjectHideFlags: 0
@@ -189,6 +190,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 593084028128917997, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
+      propertyPath: IsStatic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 593084028128917997, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
+      propertyPath: vertices.Array.data[0].x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 593084028128917997, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
+      propertyPath: vertices.Array.data[0].y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 593084028128917997, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
+      propertyPath: vertices.Array.data[1].x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 593084028128917997, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
+      propertyPath: vertices.Array.data[1].y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 593084028128917997, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
+      propertyPath: vertices.Array.data[3].x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 593084028128917997, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
+      propertyPath: vertices.Array.data[3].y
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4064162439878586195, guid: e351d6dd30870dfb2812a328a7b4ba03, type: 3}
       propertyPath: m_Name
       value: SatSquare
@@ -366,8 +395,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1204414102300382003, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
+      propertyPath: IsStatic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204414102300382003, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
+      propertyPath: vertices.Array.data[0].x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204414102300382003, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
+      propertyPath: vertices.Array.data[0].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204414102300382003, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
+      propertyPath: vertices.Array.data[1].x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204414102300382003, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
+      propertyPath: vertices.Array.data[1].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204414102300382003, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
       propertyPath: vertices.Array.data[2].x
-      value: 3.15
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204414102300382003, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
+      propertyPath: vertices.Array.data[2].y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5996379834811382882, guid: 9f3ebbf6ce775e7c38ab48d3215b47d8, type: 3}
       propertyPath: m_Name
