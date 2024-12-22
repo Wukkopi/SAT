@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class VertexShape : Shape
@@ -13,7 +12,7 @@ public class VertexShape : Shape
         var result = Vector2.zero;
         foreach (var v in vertices)
         {
-            result += v;   
+            result += v;
         }
         return result / vertices.Length + Position;
     }
@@ -24,8 +23,8 @@ public class VertexShape : Shape
 
         for (var i = 0; i < axes.Length; i++)
         {
-            axes[i] = i > 0 ? Vertices[i] - Vertices[i - 1] : Vertices[^1] - Vertices[0];   
-            axes[i] = new Vector2(-axes[i].y, axes[i].x).normalized;
+            var v = i > 0 ? Vertices[i] - Vertices[i - 1] : Vertices[0] - Vertices[^1];   
+            axes[i] = new Vector2(-v.y, v.x).normalized;
         }
         return axes;
     }
@@ -35,6 +34,7 @@ public class VertexShape : Shape
         var normals = GetEdgeNormals();
         foreach (var n in normals)
         {
+          //  if (Vector2.Dot(GetCenter(), other.GetCenter()) < 0) continue;
             var p1 = GetProjection(n);
             var p2 = other.GetProjection(n);
             if (p1.Overlaps(p2, out var d))
@@ -57,9 +57,9 @@ public class VertexShape : Shape
 
     public override Projection GetProjection(Vector2 axis)
     {
-        float min = Vector2.Dot(Vertices[0] + Position, axis);
-        float max = min;
-        for(var i = 1; i < Vertices.Length; i++)
+        float min = float.MaxValue;
+        float max = float.MinValue;
+        for(var i = 0; i < Vertices.Length; i++)
         {
             var d = Vector2.Dot(Vertices[i] + Position, axis);
             min = Mathf.Min(min, d);
