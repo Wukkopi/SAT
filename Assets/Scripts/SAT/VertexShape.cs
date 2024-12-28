@@ -2,39 +2,37 @@ using UnityEngine;
 
 public class VertexShape : Shape
 {
-    [SerializeField]
-    private Vector2[] vertices;
-
-    public Vector2[] Vertices => vertices;
-
+    public Vector2[] Vertices;
+    private Vector2[] normals = null;
     public override Vector2 GetCenter()
     {
         var result = Vector2.zero;
-        foreach (var v in vertices)
+        foreach (var v in Vertices)
         {
             result += v;
         }
-        return result / vertices.Length + Position;
+        return result / Vertices.Length + Position;
     }
 
     public Vector2[] GetEdgeNormals()
     {
-        Vector2[] axes = new Vector2[Vertices.Length];
+        if (normals != null)
+        {
+            return normals;
+        }
+
+        normals = new Vector2[Vertices.Length];
 
         // Assume clockwise polygon winding
-        for (var i = 0; i < axes.Length; i++)
+        for (var i = 0; i < normals.Length; i++)
         {
-            var v1 = i > 0 ? vertices[i - 1] : vertices[^1];
-            var v2 = i > 0 ? vertices[i] : vertices[0];
+            var v1 = i > 0 ? Vertices[i - 1] : Vertices[^1];
+            var v2 = i > 0 ? Vertices[i] : Vertices[0];
+
             var v = (v2 - v1).normalized;
-            //var v = i > 0 ? Vertices[i - 1] - Vertices[i] : Vertices[^1] - Vertices[0];   
-            axes[i] = new Vector2(-v.y, v.x);
-
-            var f = (v1+v2) / 2;
-
-            Debug.DrawLine(Position + f, Position + f + axes[i] * 0.2f, Color.cyan);
+            normals[i] = new Vector2(-v.y, v.x);
         }
-        return axes;
+        return normals;
     }
 
     public override bool ComputeOverlap(IShape other, ref float distance, ref Vector2 direction)
@@ -48,6 +46,7 @@ public class VertexShape : Shape
             {
                 continue;
             }
+
             var p1 = GetProjection(n);
             var p2 = other.GetProjection(n);
             if (p1.Overlaps(p2, out var d))
@@ -57,11 +56,9 @@ public class VertexShape : Shape
                     distance = d;
                     direction = -n;
                 }
+                continue;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         return true;
     }
@@ -83,8 +80,8 @@ public class VertexShape : Shape
     {
         for (var i = 0; i < Vertices.Length; i++)
         {
-            var v1 = i > 0 ? Vertices[i - 1] : Vertices[0];
-            var v2 = i > 0 ? Vertices[i] : Vertices[^1];
+            var v1 = i > 0 ? Vertices[i - 1] : Vertices[^1];
+            var v2 = i > 0 ? Vertices[i] : Vertices[0];
             Debug.DrawLine(Position + v1, Position + v2);
         }
     }

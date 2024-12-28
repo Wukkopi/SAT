@@ -66,11 +66,13 @@ public class CircleShape : Shape
 
     public void Update()
     {
-        for(var i = 0 ; i < 16; i++)
+        const int edges = 16; 
+        const float angleStep = 360 / edges * Mathf.Deg2Rad;
+
+        for(var i = 0 ; i < edges + 1; i++)
         {
-            var r = 360/16*Mathf.Deg2Rad;
-            var v1 = new Vector2(Mathf.Cos(r * i), Mathf.Sin(r * i)) * radius;
-            var v2 = new Vector2(Mathf.Cos(r * (i + 1)), Mathf.Sin(r * (i + 1))) * radius;
+            var v1 = new Vector2(Mathf.Cos(angleStep * i), Mathf.Sin(angleStep * i)) * radius;
+            var v2 = new Vector2(Mathf.Cos(angleStep * (i + 1)), Mathf.Sin(angleStep * (i + 1))) * radius;
 
             Debug.DrawLine( Position + v1, Position + v2);
         }

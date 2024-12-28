@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7c40b45e499f296ae19dc162fb9c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vertices:
-  - {x: -0.5, y: -0.5}
-  - {x: 0.5, y: -0.5}
+  IsStatic: 0
+  Vertices:
   - {x: 0, y: 0.5}
+  - {x: 1, y: -0.5}
+  - {x: -1, y: -0.5}
